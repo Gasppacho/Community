@@ -1,6 +1,6 @@
 Community
 ==========
-Community is an independent platform video game developped by Team PA8. The goal of the game is simple: reach the end of 
+Community is an independent platform video game developed by Team PA8. The goal of the game is simple: reach the end of 
 levels created by the community without dying. The game will soon be available on all Android devices. Will you be able to 
 complete all the levels of the Community ?
 
