@@ -13,3 +13,4 @@ Credits
 Developped by Team PA8:
 * Nicolas Lecoy - [@Pr0lexic](https://github.com/Pr0lexic)
 * Quentin Cuesta - [@Gasppacho](https://github.com/Gasppacho)
+* Julien Février - [@Xoner](https://github.com/Xoner94)
