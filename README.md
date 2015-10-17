@@ -15,3 +15,4 @@ Developed by Team PA8:
 * Quentin Cuesta - [@Gasppacho](https://github.com/Gasppacho)
 * Julien Février - [@Xoner](https://github.com/Xoner94)
 * Louis Paulet - [@louispaulet](https://github.com/louispaulet)
+* Hicham Mrani - [@nakmuay-f](https://github.com/nakmuay-f)
