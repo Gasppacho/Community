@@ -19,7 +19,7 @@ Community.Velocity.prototype = {
 		//retour de l'acceleration
 		return delta;
 
-	}
+	},
 
 		//Le joueur est il vivant ? (conditions de mort par physique)
 		isAlive: function() { 
