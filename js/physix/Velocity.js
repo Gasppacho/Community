@@ -1,10 +1,6 @@
 Community.Velocity = function(player){
-	this.x = x ;
-
-	var self = this; //wtf?
-
-	var vitesseprec = player.body.velocity.x;
-	var delta = 0;
+	this.vitesseprec = player.body.velocity.x;
+	
 	
 };
 
@@ -22,6 +18,21 @@ Community.Velocity.prototype = {
 		vitesseprec = player.body.velocity.x;
 		//retour de l'acceleration
 		return delta;
+
+	}
+
+		//Le joueur est il vivant ? (conditions de mort par physique)
+		isAlive: function() { 
+		//Es que l'acceleration est supportable
+		if (gforce()>400){
+			return false;
+		}
+		//Si toutes les conditions ci dessus ont échoué, alors il est vivant
+		else
+		{
+			return true;
+		}
+
 
 	}
 
