@@ -2,7 +2,7 @@ Community
 ==========
 Community is an independent platform video game developed by Team PA8. The goal of the game is simple: reach the end of 
 levels created by the community without dying. The game will soon be available on all Android devices. Will you be able to 
-complete all the levels of the Community* ?
+complete all the levels of the Community ?
 
 Documentation
 --------------
@@ -16,5 +16,3 @@ Developed by Team PA8:
 * Julien Février - [@Xoner](https://github.com/Xoner94)
 * Louis Paulet - [@louispaulet](https://github.com/louispaulet)
 * Hicham Mrani - [@nakmuay-f](https://github.com/nakmuay-f)
-
-*Community is not an explicit copy of the six seasons and a movie show.
