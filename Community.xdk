@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "",
       "projectGuid": "e13e489d-7f39-4e9e-8f01-a009a5daf8ae",
-      "lastModifiedDate": 1447593416967,
+      "lastModifiedDate": 1453290159848,
       "creationDate": 1447593408330
     },
     "sourceDirectory": "",
@@ -40,7 +40,7 @@
           "android-installLocation": "auto"
         },
         "isActive_": true,
-        "appName_": "Community",
+        "appName_": "Community-18",
         "appID_": "not.yet.specified",
         "appAccess_": {
           "mode": "legacy",

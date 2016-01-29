@@ -9,13 +9,15 @@ var loadState = {
        /**
         *   This is the number of simultaneous touch we allow
         */
-        this.input.maxPointers = 1;
+        this.input.maxPointers = 3;
         
         
         /**
         *   Scaling option
         */
-        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.scaleMode = Phaser.ScaleManager.EXACT_FIT;
+        //game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         
        /**
         *   Have the game centered
@@ -27,12 +29,12 @@ var loadState = {
         *   The screeb size will be set automatically
         */
         game.scale.setScreenSize(true);		
-        game.scale.startFullScreen(true);
+        //game.scale.startFullScreen(true);
         
     },
     
     create: function() {
-        game.state.start('menu');
+        game.state.start('loadMenu');
     }
     
 };

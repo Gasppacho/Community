@@ -15,6 +15,13 @@ var loadEditState = {
         game.load.image('baddie', 'assets/baddie.png');
         game.load.image('sky', 'assets/sky.png');
         
+        /**
+         *  Loading controller assets
+         */
+        game.load.spritesheet('buttonMove', 'assets/button-horizontal.png',96,64);
+        game.load.spritesheet('buttonAction', 'assets/button-round.png',96,96);
+        
+        
         //Objets accessibles par le joueur pour l'editeur de niveaux
         game.load.image('boost_left', 'assets/boost_left.png');
         game.load.image('boost_right', 'assets/boost_right.png');
@@ -34,8 +41,11 @@ var loadEditState = {
         game.load.image('player', 'assets/player.png');
         game.load.image('star', 'assets/star.png');
         game.load.image('vertical', 'assets/vertical.png');
+        game.load.image('backSprite', 'assets/backToMenu.png');
+        game.load.image('saveSprite', 'assets/Save.png');
+        game.load.image('cursor', 'assets/cursor.png');
+
     },
-    
     create: function() {
         game.state.start('edit');
     }

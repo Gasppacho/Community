@@ -7,10 +7,11 @@ function MapSaver() {
    /**
     *   This function take the position and the type of an element to store it in str[].
     */
-    this.addElement = function(x, y, type) {
+    this.addElement = function(x, y, type, effet) {
         this.str.push(type);
         this.str.push(x);
         this.str.push(y);
+        this.str.push(effet);
     },
     
    /** 
