@@ -40,6 +40,9 @@ var loadGameState = {
         game.load.image('sky', 'assets/sky.png');
         game.load.image('star', 'assets/star.png');
         game.load.image('vertical', 'assets/vertical.png');
+        
+        // INTERFACE
+        game.load.image('backSprite', 'assets/backToMenu.png');
 	},
 
 	create: function() {
