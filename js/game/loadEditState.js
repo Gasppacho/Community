@@ -46,6 +46,7 @@ var loadEditState = {
         game.load.image('cursor', 'assets/cursor.png');
         game.load.image('droite', 'assets/droite.png');
         game.load.image('gauche', 'assets/gauche.png');
+        game.load.image('cadre', 'assets/cadre.png');
 
 
     },
