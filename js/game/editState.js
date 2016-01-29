@@ -11,7 +11,7 @@ var cursors;
 var id = 0; //identifiant du bloc choisi
 var idf = 0; //identifiant de l'effet choisi
 var bloc_preview; //bloc de previsiualisation dans le menu de selection
-/*var liste_blocs = [ //liste des blocs pouvant être placés
+var liste_blocs = [ //liste des blocs pouvant être placés
 'boost_left',
 'boost_right',
 'checkpoint_empty',
@@ -26,7 +26,21 @@ var bloc_preview; //bloc de previsiualisation dans le menu de selection
 'lava',
 'movable',
 'star'
-];*/
+];
+
+var liste_boutons_menu_blocs = [ //liste des blocs dans le menu de selection (10 affichés d'un coup)
+'bloc1',
+'bloc2',
+'bloc3',
+'bloc4',
+'bloc5',
+'bloc6',
+'bloc7',
+'bloc8',
+'bloc9',
+'bloc10'
+];
+
 var liste_effets = [
 "gravity",
 "sticky"
@@ -40,14 +54,14 @@ function addCube() {
     /**
      *  Envois de l'élément à la sauvegarde
      */
-    saver.addElement(player.position.x, player.position.y, currentBloc, "sticky");
+    saver.addElement(player.position.x, player.position.y, liste_blocs[id+currentBloc], "sticky");
     // ici hicham doit faire sa requete vers la base de donnée
     
     /**
      *  Ajout de l'élément à l'inteface d'édition pour visualisation
      *  Adaptation de la taille du sprite avec SCALE.
      */
-    cubes = game.add.sprite(player.position.x, player.position.y, currentBloc);
+    cubes = game.add.sprite(player.position.x, player.position.y, liste_blocs[id+currentBloc]);
     cubes.scale.setTo(0.5, 0.5);
 }
 
@@ -69,6 +83,52 @@ function selectGravity(nom_du_bloc) {
         }
         
         MenuText.text=liste_effets[idf];
+        return;
+    
+    
+    
+}
+
+function menu_liste_blocs(offset) { //MAJ du menu de selection des blocs selon un offset "gauche" ou "droite"
+    //alterne entre 0 et 1 à chaque run.
+    //
+    
+    cptmax = 10; // nombre de blocks dans le menu de selection
+    idmax = liste_blocs.length - cptmax;
+
+        if (offset == 'gauche') //ajout d'un bloc a gauche
+        {
+            if (id == 0) //limite inferieure
+            {
+                id = 0; //ne rien faire ?
+            }
+            else
+            {
+                id--; //decalage a gauche
+            }
+        }
+        else //ajout d'un bloc a droite
+        {
+            if (id == idmax) //limite superieure
+            {
+                id = idmax; //ne rien faire ?
+            }
+            else
+            {
+                id++; //decalage a droite
+            }
+        }
+        
+        //MAJ du menu des blocs
+        //id = identifiant du premier bloc affiché
+        //il faut afficher les 9 autres blocs suivants pour completer le menu
+        for (cpt = 0; cpt < 10; cpt++)
+        {
+            //cpt est le compteur de blocs fixes (10)
+            //id est le compteur des blocs a decaler
+            liste_boutons_menu_blocs[cpt].loadTexture(liste_blocs[id+cpt]);
+        }
+        
         return;
     
     
@@ -161,71 +221,84 @@ var editState = {
             buttonSave.fixedToCamera = true;
             buttonSave.events.onInputDown.add(function(){save();});
 
-            buttonPal1= game.add.button(650, 20, 'lava');
-            buttonPal1.scale.setTo(0.5, 0.5);
-            buttonPal1.fixedToCamera = true;
-            buttonPal1.events.onInputDown.add(function(){currentBloc = 'lava';});
-
+            //BOUTONS DE POSE DE BLOCS
+            //Block le plus à droite : fleche droite
+            buttonPal1= game.add.button(650, 20, 'droite'); //remplacer par sprite fleche droite
+            buttonPal1.scale.setTo(0.2, 0.2); // mise a l'echelle
+            buttonPal1.fixedToCamera = true; //fixe par rapport a la camera
+            buttonPal1.events.onInputDown.add(function(){menu_liste_blocs('droite');}); //droite : 1 block vers la droite
+            /*
             buttonPal2 = game.add.button(700, 20, 'ground');
             buttonPal2.scale.setTo(0.5, 0.5);
             buttonPal2.fixedToCamera = true;
             buttonPal2.events.onInputDown.add(function(){currentBloc = 'ground';});
-
-            buttonPal3 = game.add.button(600, 20, 'ground_snow');
+            bloc1 = buttonPal2; //ajout a la liste des blocs du menu de selection
+            */
+            buttonPal3 = game.add.button(600, 20, 'ground_snow'); //INIT SPRITE
             buttonPal3.scale.setTo(0.5, 0.5);
             buttonPal3.fixedToCamera = true;
-            buttonPal3.events.onInputDown.add(function(){currentBloc = 'ground_snow';});
+            buttonPal3.events.onInputDown.add(function(){currentBloc = 9;});
+            liste_boutons_menu_blocs[9] = buttonPal3; //ajout a la liste des blocs du menu de selection
 
-            buttonPal4 = game.add.button(550, 20, 'star');
+            buttonPal4 = game.add.button(550, 20, 'star'); //INIT SPRITE
             buttonPal4.scale.setTo(0.5, 0.5);
             buttonPal4.fixedToCamera = true;
-            buttonPal4.events.onInputDown.add(function(){currentBloc = 'star';});
+            buttonPal4.events.onInputDown.add(function(){currentBloc = 8;});
+            liste_boutons_menu_blocs[8] = buttonPal4; //ajout a la liste des blocs du menu de selection
 
-            buttonPal5 = game.add.button(500, 20, 'instable');
+            buttonPal5 = game.add.button(500, 20, 'instable'); //INIT SPRITE
             buttonPal5.scale.setTo(0.5, 0.5);
             buttonPal5.fixedToCamera = true;
-            buttonPal5.events.onInputDown.add(function(){currentBloc = 'instable';});
+            buttonPal5.events.onInputDown.add(function(){currentBloc = 7;});
+            liste_boutons_menu_blocs[7] = buttonPal5; //ajout a la liste des blocs du menu de selection
 
-            buttonPal6 = game.add.button(450, 20, 'diamond');
+            buttonPal6 = game.add.button(450, 20, 'diamond'); //INIT SPRITE
             buttonPal6.scale.setTo(0.5, 0.5);
             buttonPal6.fixedToCamera = true;
-            buttonPal6.events.onInputDown.add(function(){currentBloc = 'diamond';});
+            buttonPal6.events.onInputDown.add(function(){currentBloc = 6;});
+            liste_boutons_menu_blocs[6] = buttonPal6; //ajout a la liste des blocs du menu de selection
 
-            buttonPal7 = game.add.button(400, 20, 'ladder');
+            buttonPal7 = game.add.button(400, 20, 'ladder'); //INIT SPRITE
             buttonPal7.scale.setTo(0.5, 0.5);
             buttonPal7.fixedToCamera = true;
-            buttonPal7.events.onInputDown.add(function(){currentBloc = 'ladder';});
+            buttonPal7.events.onInputDown.add(function(){currentBloc = 5;});
+            liste_boutons_menu_blocs[5] = buttonPal7; //ajout a la liste des blocs du menu de selection
           
 
-            buttonPal9 = game.add.button(350, 20, 'boost_left');
+            buttonPal9 = game.add.button(350, 20, 'boost_left'); //INIT SPRITE
             buttonPal9.scale.setTo(0.5, 0.5);
             buttonPal9.fixedToCamera = true;
-            buttonPal9.events.onInputDown.add(function(){currentBloc = 'boost_left';});
+            buttonPal9.events.onInputDown.add(function(){currentBloc = 4;});
+            liste_boutons_menu_blocs[4] = buttonPal9; //ajout a la liste des blocs du menu de selection
 
-            buttonPal10 = game.add.button(300, 20, 'boost_right');
+            buttonPal10 = game.add.button(300, 20, 'boost_right'); //INIT SPRITE
             buttonPal10.scale.setTo(0.5, 0.5);
             buttonPal10.fixedToCamera = true;
-            buttonPal10.events.onInputDown.add(function(){currentBloc = 'boost_right';});
+            buttonPal10.events.onInputDown.add(function(){currentBloc = 3;});
+            liste_boutons_menu_blocs[3] = buttonPal10; //ajout a la liste des blocs du menu de selection
 
-            buttonPal11 = game.add.button(250, 20, 'gravity_inverser');
+            buttonPal11 = game.add.button(250, 20, 'gravity_inverser'); //INIT SPRITE
             buttonPal11.scale.setTo(0.5, 0.5);
             buttonPal11.fixedToCamera = true;
-            buttonPal11.events.onInputDown.add(function(){currentBloc = 'gravity_inverser';});
+            buttonPal11.events.onInputDown.add(function(){currentBloc = 2;});
+            liste_boutons_menu_blocs[2] = buttonPal11; //ajout a la liste des blocs du menu de selection
 
-            buttonPal12 = game.add.button(200, 20, 'firstaid');
+            buttonPal12 = game.add.button(200, 20, 'firstaid'); //INIT SPRITE
             buttonPal12.scale.setTo(0.5, 0.5);
             buttonPal12.fixedToCamera = true;
-            buttonPal12.events.onInputDown.add(function(){currentBloc = 'firstaid';});
+            buttonPal12.events.onInputDown.add(function(){currentBloc = 1;});
+            liste_boutons_menu_blocs[1] = buttonPal12; //ajout a la liste des blocs du menu de selection
 
-            buttonPal13 = game.add.button(150, 20, 'checkpoint_empty');
+            buttonPal13 = game.add.button(150, 20, 'checkpoint_empty'); //INIT SPRITE
             buttonPal13.scale.setTo(0.5, 0.5);
             buttonPal13.fixedToCamera = true;
-            buttonPal13.events.onInputDown.add(function(){currentBloc = 'checkpoint_empty';});
-
-            buttonPal14 = game.add.button(100, 20, 'checkpoint_full');
-            buttonPal14.scale.setTo(0.5, 0.5);
-            buttonPal14.fixedToCamera = true;
-            buttonPal14.events.onInputDown.add(function(){currentBloc = 'checkpoint_full';});
+            buttonPal13.events.onInputDown.add(function(){currentBloc = 0;});
+            liste_boutons_menu_blocs[0] = buttonPal13; //ajout a la liste des blocs du menu de selection
+            //Bouton le plus à gauche  : Fleche gauche
+            buttonPal14 = game.add.button(100, 20, 'gauche'); //à remplacer par un sprite de fleche
+            buttonPal14.scale.setTo(0.2, 0.2); //reglache de l'echelle du sprite
+            buttonPal14.fixedToCamera = true; //fixe par rapport à la camera
+            buttonPal14.events.onInputDown.add(function(){menu_liste_blocs('gauche');}); //gauche : 1 block vers la gauche
 
         //}
         
@@ -304,16 +377,16 @@ var editState = {
                 unPress = false;
                 save();
             }
-            /*else if (plusKey.isDown && unPress == true){
+            else if (plusKey.isDown && unPress == true){
                 unPress = false;
-                selectCube("prec");
-                selectGravity(liste_blocs[id]);
+                //+1 block a droite dans le menu bloc
+                //
             }
             else if (lessKey.isDown && unPress == true){
                 unPress = false;
-                selectCube("suivant");
-                selectGravity(liste_blocs[id]);
-            }*/
+                //+1 block a droite dans le menu bloc
+                //
+            }
         //}else{
             if(left){
                 player.body.velocity.x = -150;
