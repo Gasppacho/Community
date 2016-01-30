@@ -44,6 +44,10 @@ var loadEditState = {
         game.load.image('backSprite', 'assets/backToMenu.png');
         game.load.image('saveSprite', 'assets/Save.png');
         game.load.image('cursor', 'assets/cursor.png');
+        game.load.image('droite', 'assets/droite.png');
+        game.load.image('gauche', 'assets/gauche.png');
+        game.load.image('cadre', 'assets/cadre.png');
+
 
     },
     create: function() {
