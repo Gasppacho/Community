@@ -1,0 +1,31 @@
+/* **************************************************************************** */
+/*                                                       ____   _    ___        */
+/*   stylesheet.css                                     |  _ \ / \  ( _ )       */
+/*                                                      | |_) / _ \ / _ \       */
+/*   By: Pr0lexic                                       |  __/ ___ | (_) |      */
+/*                                                      |_| /_/   \_\___/       */
+/*   Created: 2016/01/17 by Pr0lexic                                            */
+/*   Updated: 2016/01/17 by Pr0lexic                                            */
+/*                                                                              */
+/* **************************************************************************** */
+
+body {
+    margin: 0px 0px 1px 0px;    /* the extra 1px allows the iOS inner/outer check to work */
+    background: #898989;
+    overflow: hidden;           /* remove the scroll bar for desktop navigator */
+}
+
+#orientation {
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../assets/images/orientation.jpg); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(0, 0, 0);
+    z-index: 999;
+    display: none;
+}
