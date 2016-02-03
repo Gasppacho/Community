@@ -12,6 +12,7 @@ var cursors;
 var id = 0; //identifiant du bloc choisi
 var idf = 0; //identifiant de l'effet choisi
 var bloc_preview; //bloc de previsiualisation dans le menu de selection
+/*
 var liste_blocs = [ //liste des blocs pouvant être placés
 'boost_left',
 'boost_right',
@@ -28,6 +29,8 @@ var liste_blocs = [ //liste des blocs pouvant être placés
 'movable',
 'star'
 ];
+*/
+var liste_blocs = new Array(); 
 
 var liste_boutons_menu_blocs = [ //liste des blocs dans le menu de selection (10 affichés d'un coup)
 'bloc1',
@@ -147,7 +150,12 @@ var editState = {
 	create: function() {
 		var cubes = game.add.group();
 
-		// Game world size & background
+        //chargement du JSON
+        var temp = JSON.parse(game.cache.getText('data'));
+		liste_blocs = temp.liste_blocs;
+        console.log(temp.liste_blocs[0]);
+
+        // Game world size & background
 		game.add.tileSprite(0, 0, 1600, 1200, 'sky');
 		game.world.setBounds(0, 0, 1600, 640);
         

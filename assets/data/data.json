@@ -1,0 +1,18 @@
+{
+	"liste_blocs" : [
+	"boost_left",
+	"boost_right",
+	"checkpoint_empty",
+	"checkpoint_full",
+	"diamond",
+	"firstaid",
+	"gravity_inverser",
+	"ground",
+	"ground_snow",
+	"instable",
+	"ladder",
+	"lava",
+	"movable",
+	"star"
+	]
+}
