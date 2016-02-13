@@ -12,7 +12,7 @@ function MapLoader() {
  */
 
 //fonction d'attribution des propriétés d'un bloc
-function apply_effect(bloc, nom){
+function apply_effect(bloc, nom, entites, game){
    
     if (nom == "movable"){
         //on peut le deplacer
@@ -24,15 +24,19 @@ function apply_effect(bloc, nom){
         //active la friction
         bloc.body.drag.x = 100;
     }
+    else if (nom == "fantome"){
+        game = entites.load(nom, bloc.body.x, bloc.body.y, game);
+        delete this.map["fantome"];
+    }
     else
     {
         //fixe definitivement les blocs
         bloc.body.immovable = true;
     }
-    return bloc;
+    return game;
 }
 //fonction de chargement de la map
-MapLoader.prototype.load = function(game, map) {
+MapLoader.prototype.load = function(game, map, entites) {
 
        //chargement du json 
        var temp = JSON.parse(game.cache.getText('data'));
@@ -52,12 +56,12 @@ MapLoader.prototype.load = function(game, map) {
                 //creer une clef du nom du bloc et y inserer une reference vers un groupe de plateformes aux coords x, y, et contenant le type
             if(list[i].type in map){
                 buffer = map[list[i].type].create(parseInt(list[i].x), parseInt(list[i].y), list[i].type);
-                apply_effect(buffer, list[i].type);
+                game = apply_effect(buffer, list[i].type, entites, game);
             }else {
                 map[list[i].type] = game.add.group();
                 map[list[i].type].enableBody = true;
                 buffer = map[list[i].type].create(parseInt(list[i].x), parseInt(list[i].y), list[i].type);
-                apply_effect(buffer, list[i].type);
+                game = apply_effect(buffer, list[i].type, entites, game);
             }
                 
                 

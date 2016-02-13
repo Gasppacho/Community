@@ -23,12 +23,16 @@ var map = {}; //la map qui contient l'ensemble des blocs d'un level
 var cursors;
 var wkey;
 var loader = new MapLoader();
-////////////DEBUT TEST////////////////
+////////////DEBUT STATS////////////////
 var stats = {};
 var statistiques = new Statistiques();
 var panneau_stats_afficher = true; //autorise l'affichage des statistiques
 var stats_label;
-////////////FIN TEST//////////////////
+////////////FIN STATS//////////////////
+////////////DEBUT ENTITES////////////////
+var entities = {};
+var entites = new movingEntities();
+////////////FIN ENTITES//////////////////
 //  Variables pour les mouvements.
 var left = false;
 var right = false;
@@ -234,7 +238,7 @@ var playState = {
          * Génération du niveau depuis un json ou le localStorage
          * Envois des différents groupe pour la gestion des différents blocs
          */
-        game = loader.load(game, map);
+        game = loader.load(game, map, entites);
 
         /*
         DEBUT DE L'INITIALISATION DES STATS
@@ -251,6 +255,8 @@ var playState = {
         /*
         FIN DE L'INITIALISATION DES STATS
          */
+        
+        
         
         //ajout des 3 vies
         vie1 = game.add.sprite(550, 50, 'firstaid');
@@ -391,6 +397,10 @@ var playState = {
         if('lava' in map){
             game.physics.arcade.overlap(player, map['lava'], damage, null, this);
         }
+
+        //ajout de l'overlap entre le joueur et un monstre
+        game.physics.arcade.overlap(player, entites.get("fantome").sprite, damage, null, this);
+        
         /////////////////////////////////////////////////
         // // FIN DE LA ZONE DE TEST COLLIDE
 	    /////////////////////////////////////////////////
@@ -399,9 +409,18 @@ var playState = {
 
 	    //  Reset the players velocity (movement)
 	    player.body.velocity.x = 0;
+        //comptage de la distance parcourue par je joueur
         statistiques.distance_manager(player.body.x, player.body.y);
+        //comptage du temps passé
         statistiques.time_manager();
-
+        /*
+        LES ENTITES
+         */
+        //gestion des mouvements d'entités
+        entites.move(game, player);
+        /*
+        FIN DES ENTITES
+         */
 	    if (cursors.left.isDown || left)
 	    {
 	        //  Move to the left
