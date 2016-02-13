@@ -5,14 +5,12 @@ var left = false;
 var right = false;
 var up = false;
 var down = false;
-var camera;
 var currentBloc = 'ground';
 var saver = new MapSaver();
 var cursors;
 var id = 0; //identifiant du bloc choisi
 var idf = 0; //identifiant de l'effet choisi
 var bloc_preview; //bloc de previsiualisation dans le menu de selection
-/*
 var liste_blocs = [ //liste des blocs pouvant être placés
 'boost_left',
 'boost_right',
@@ -29,15 +27,18 @@ var liste_blocs = [ //liste des blocs pouvant être placés
 'movable',
 'star'
 ];
-*/
-var liste_blocs = new Array(); 
 
 var liste_boutons_menu_blocs = [ //liste des blocs dans le menu de selection (10 affichés d'un coup)
 'bloc1',
 'bloc2',
 'bloc3',
 'bloc4',
-'bloc5'
+'bloc5',
+'bloc6',
+'bloc7',
+'bloc8',
+'bloc9',
+'bloc10'
 ];
 
 var liste_effets = [
@@ -67,11 +68,10 @@ function addCube() {
 
 function overlay(blocID) {
     
-    var x_cadre = liste_boutons_menu_blocs[blocID].position.x + game.world.x; //releve du x
-    var y_cadre = liste_boutons_menu_blocs[blocID].position.y + game.world.y; //releve du y
+    var x = liste_boutons_menu_blocs[blocID].x; //releve du x
+    var y = liste_boutons_menu_blocs[blocID].y; //releve du y
     cadre.kill();
-    cadre = game.add.sprite(x_cadre, y_cadre, 'cadre');
-    cadre.fixedToCamera = true;
+    cadre = game.add.sprite(x,y, 'cadre');
     cadre.scale.setTo(0.5, 0.5);
 }
 
@@ -103,36 +103,36 @@ function menu_liste_blocs(offset) { //MAJ du menu de selection des blocs selon u
     //alterne entre 0 et 1 à chaque run.
     //
     
-    cptmax = liste_boutons_menu_blocs.length; // nombre de blocks dans le menu de selection
+    cptmax = 10; // nombre de blocks dans le menu de selection
     idmax = liste_blocs.length - cptmax;
 
         if (offset == 'gauche') //ajout d'un bloc a gauche
         {
-            if (id <= 0) //limite inferieure
+            if (id == 0) //limite inferieure
             {
-                //id = 0; //ne rien faire ?
+                id = 0; //ne rien faire ?
             }
             else
             {
-                id= id - 5; //decalage a gauche
+                id--; //decalage a gauche
             }
         }
         else //ajout d'un bloc a droite
         {
-            if (id >= idmax) //limite superieure
+            if (id == idmax) //limite superieure
             {
-                //id = idmax; //ne rien faire ?
+                id = idmax; //ne rien faire ?
             }
             else
             {
-                id = id + 5; //decalage a droite
+                id++; //decalage a droite
             }
         }
         
         //MAJ du menu des blocs
         //id = identifiant du premier bloc affiché
         //il faut afficher les 9 autres blocs suivants pour completer le menu
-        for (cpt = 0; cpt < 5; cpt++)
+        for (cpt = 0; cpt < 10; cpt++)
         {
             //cpt est le compteur de blocs fixes (10)
             //id est le compteur des blocs a decaler
@@ -150,12 +150,7 @@ var editState = {
 	create: function() {
 		var cubes = game.add.group();
 
-        //chargement du JSON
-        var temp = JSON.parse(game.cache.getText('data'));
-		liste_blocs = temp.liste_blocs;
-        console.log(temp.liste_blocs[0]);
-
-        // Game world size & background
+		// Game world size & background
 		game.add.tileSprite(0, 0, 1600, 1200, 'sky');
 		game.world.setBounds(0, 0, 1600, 640);
         
@@ -191,8 +186,7 @@ var editState = {
         /**
 	     * Creation of a camera following the player
 	     */
-	    camera = game.camera.follow(player);
-
+	    game.camera.follow(player);
         
         /**
          *  Joystick and button creation
@@ -238,7 +232,7 @@ var editState = {
 
             //BOUTONS DE POSE DE BLOCS
             //Block le plus à droite : fleche droite
-            buttonPal1= game.add.button(400, 20, 'droite'); //remplacer par sprite fleche droite
+            buttonPal1= game.add.button(650, 20, 'droite'); //remplacer par sprite fleche droite
             buttonPal1.scale.setTo(0.2, 0.2); // mise a l'echelle
             buttonPal1.fixedToCamera = true; //fixe par rapport a la camera
             buttonPal1.events.onInputDown.add(function(){menu_liste_blocs('droite');}); //droite : 1 block vers la droite
@@ -249,7 +243,6 @@ var editState = {
             buttonPal2.events.onInputDown.add(function(){currentBloc = 'ground';});
             bloc1 = buttonPal2; //ajout a la liste des blocs du menu de selection
             */
-           /*
             buttonPal3 = game.add.button(600, 20, 'ground_snow'); //INIT SPRITE
             buttonPal3.scale.setTo(0.5, 0.5);
             buttonPal3.fixedToCamera = true;
@@ -267,12 +260,14 @@ var editState = {
             buttonPal5.fixedToCamera = true;
             buttonPal5.events.onInputDown.add(function(){currentBloc = 7;overlay(currentBloc);});
             liste_boutons_menu_blocs[7] = buttonPal5; //ajout a la liste des blocs du menu de selection
+
             buttonPal6 = game.add.button(450, 20, 'diamond'); //INIT SPRITE
+            cadre = game.add.sprite(400,20, 'cadre'); // INIT CADRE
+            cadre.scale.setTo(0.5, 0.5);
             buttonPal6.scale.setTo(0.5, 0.5);
             buttonPal6.fixedToCamera = true;
             buttonPal6.events.onInputDown.add(function(){currentBloc = 6;overlay(currentBloc);});
             liste_boutons_menu_blocs[6] = buttonPal6; //ajout a la liste des blocs du menu de selection
-            
 
             buttonPal7 = game.add.button(400, 20, 'ladder'); //INIT SPRITE
             buttonPal7.scale.setTo(0.5, 0.5);
@@ -280,16 +275,12 @@ var editState = {
             buttonPal7.events.onInputDown.add(function(){currentBloc = 5;overlay(currentBloc);});
             liste_boutons_menu_blocs[5] = buttonPal7; //ajout a la liste des blocs du menu de selection
           
-            */
+
             buttonPal9 = game.add.button(350, 20, 'boost_left'); //INIT SPRITE
             buttonPal9.scale.setTo(0.5, 0.5);
             buttonPal9.fixedToCamera = true;
             buttonPal9.events.onInputDown.add(function(){currentBloc = 4;overlay(currentBloc);});
             liste_boutons_menu_blocs[4] = buttonPal9; //ajout a la liste des blocs du menu de selection
-            cadre = game.add.sprite(150,20, 'cadre'); // INIT CADRE
-            cadre.scale.setTo(0.5, 0.5);
-            cadre.fixedToCamera = true;
-
 
             buttonPal10 = game.add.button(300, 20, 'boost_right'); //INIT SPRITE
             buttonPal10.scale.setTo(0.5, 0.5);
@@ -356,10 +347,6 @@ var editState = {
         //bloc_preview = game.add.sprite(player.position.x + 100 + 16, player.position.y+16, liste_blocs[id]); 
         //mise a l'echelle
         //bloc_preview.scale.setTo(0.5, 0.5); 
-        //
-        //
-        menu_liste_blocs(0);
-        overlay(1);
 
 
 	},

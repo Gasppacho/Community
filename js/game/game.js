@@ -3,7 +3,7 @@
  */
 //var game = new Phaser.Game(800, 480, Phaser.AUTO, 'gameDiv');
 //var game = new Phaser.Game(800, 480, Phaser.CANVAS);
-var game = new Phaser.Game(800, 600, Phaser.CANVAS);
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv');
 
 /**
  *  Cration de tout les STATE.

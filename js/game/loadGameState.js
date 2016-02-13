@@ -34,7 +34,6 @@ var loadGameState = {
         game.load.image('ladder', 'assets/ladder.png');
         game.load.image('lava', 'assets/lava.png');
         game.load.image('movable', 'assets/movable.png');
-        game.load.image('noms', 'assets/noms.png');
         game.load.image('platform', 'assets/platform.png');
         game.load.image('player', 'assets/player.png');
         game.load.image('sky', 'assets/sky.png');
@@ -43,7 +42,9 @@ var loadGameState = {
         
         // INTERFACE
         game.load.image('backSprite', 'assets/backToMenu.png');
-	},
+        game.load.image('StatsSprite', 'assets/displayStats.png');
+        game.load.text('data', 'assets/data.json');
+    },
 
 	create: function() {
 		/**

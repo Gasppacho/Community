@@ -48,9 +48,6 @@ var loadEditState = {
         game.load.image('gauche', 'assets/gauche.png');
         game.load.image('cadre', 'assets/cadre.png');
 
-        //test de load de JSON
-        game.load.text('data', 'assets/data/data.json');
-
 
     },
     create: function() {

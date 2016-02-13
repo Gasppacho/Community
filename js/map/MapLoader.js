@@ -1,84 +1,72 @@
 function MapLoader() {
-    this.map;
+    this.map = {};
     this.str;
 }
 
 /**
  *  
- *  ///ANCIEN CODE DE CHARGEMENT
- *  
- *  
- */
-/*
-MapLoader.prototype.load = function(platforms) {
-    var data = localStorage.getItem('level')
-    this.str = JSON.parse(data);
-    var i = 0;
-    while (i < this.str.length){
-        console.log(this.str[i]);
-        console.log(this.str[i+1]);
-        console.log(this.str[i+2]);
-        this.map = platforms.create(this.str[i + 1], this.str[i + 2], this.str[i]);
-        this.map.body.immovable = true;
-        this.map.scale.setTo(0.5, 0.5);
-        i += 3;
-    }
-    return this.map;
-};
-*/
-
-/**
- *  
  *  ///NOUVEAU CODE DE CHARGEMENT
+ *  //last edit : Louis
  *  
  *  
  */
 
-function apply_effect(map, effect_name){
-    if (effect_name=="gravity")
-    {
-        //liste des effets à appliquer
-        game.physics.arcade.enable(map);
-        map.body.collideWorldBounds = true;
-        map.body.immovable = false;
-        map.body.gravity.y = 300;
-        map.body.drag.x = 100;
-        //DEBUG
-        console.log("gravity loaded");
+//fonction d'attribution des propriétés d'un bloc
+function apply_effect(bloc, nom){
+   
+    if (nom == "movable"){
+        //on peut le deplacer
+        bloc.body.immovable = false;
+        //il ne peut pas tomber hors de l'écran
+        bloc.body.collideWorldBounds = true;
+        //active la gravité 
+        bloc.body.gravity.y = 300;
+        //active la friction
+        bloc.body.drag.x = 100;
     }
-    else if (effect_name=="sticky")
+    else
     {
-        //liste des effets à appliquer
-        map.body.immovable = true;
-        //DEBUG
-        console.log("sticky loaded");
+        //fixe definitivement les blocs
+        bloc.body.immovable = true;
     }
-    return map;
+    return bloc;
 }
+//fonction de chargement de la map
+MapLoader.prototype.load = function(game, map) {
 
-MapLoader.prototype.load = function(platforms) {
-    var data = localStorage.getItem('level')
-    this.str = JSON.parse(data);
-    var i = 0;
+       //chargement du json 
+       var temp = JSON.parse(game.cache.getText('data'));
+       
+       //nouveau tableau
+       var list = new Array();
+       //passage du contenu du JSON au tableau
+       list = temp.elements;
+       //taille de la map (en blocs)
+       var size = parseInt(temp.size);
 
-    while (i < this.str.length){
-        //DEBUG
-        //type
-        console.log(this.str[i]);
-        //x
-        console.log(this.str[i+1]);
-        //y
-        console.log(this.str[i+2]);
-        //effet
-        console.log(this.str[i+3]);
-        //ajout des sprites
-        this.map = platforms.create(this.str[i + 1], this.str[i + 2], this.str[i]);
-        //attribution des effets this.str[i+3]
-        this.map = apply_effect(this.map, this.str[i+3]);
-        //mise a l'echelle
-        this.map.scale.setTo(0.5, 0.5);
-        //incrementation par 4 (4 propriétés en mémoire)
-        i += 4;
-    }
-    return this.map;
+       //declaration d'un iterateur
+       var i = 0;
+       while(i < size){ //tant qu'il reste des blocs :
+
+            var buffer;
+                //creer une clef du nom du bloc et y inserer une reference vers un groupe de plateformes aux coords x, y, et contenant le type
+            if(list[i].type in map){
+                buffer = map[list[i].type].create(parseInt(list[i].x), parseInt(list[i].y), list[i].type);
+                apply_effect(buffer, list[i].type);
+            }else {
+                map[list[i].type] = game.add.group();
+                map[list[i].type].enableBody = true;
+                buffer = map[list[i].type].create(parseInt(list[i].x), parseInt(list[i].y), list[i].type);
+                apply_effect(buffer, list[i].type);
+            }
+                
+                
+                //mise a l'echelle des sprites
+                buffer.scale.setTo(0.5, 0.5);
+            //iteration : bloc suivant.
+            i++;
+        }
+        
+    //retourne la nouvelle version de game contenant une map chargée
+    return game;
 };

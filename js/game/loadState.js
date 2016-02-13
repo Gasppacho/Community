@@ -30,6 +30,8 @@ var loadState = {
         */
         game.scale.setScreenSize(true);		
         //game.scale.startFullScreen(true);
+
+        
         
     },
     
