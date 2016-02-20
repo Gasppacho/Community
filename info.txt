@@ -1,0 +1,16 @@
+﻿/**
+ * BUG
+ */
+
+1. 	Problème avec la déclaration de classe qui ne sont pas des states. Impossible de mettre Community. devant leur devant déclaration.
+
+2.	Problème de déclaration de certaines variables dans les classe. Le 'this' ne fonctionne pas. Mais uniquemet pour les variable 'left' 'right' et 'up' dans la state play.
+
+3.	Le joueur peut sauteur sur tous les blocs (y compris la lave)
+/**
+ * COMMENTAIRE
+ */
+
+1.	La défaite en cas de chute trop importante n'est pas implémenté.
+
+2.	Les vies et les monstres ne sont pas implémentés.
