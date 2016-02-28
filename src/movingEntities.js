@@ -63,6 +63,22 @@ movingEntities.prototype.move_old = function(game, player){
             }
 
        }
+       else if (key == bomb){ //faire exploser / clignoter la bombe
+          //distance entre le joueur et la bombe
+          var dx = Math.abs(this.entities[key].sprite.body.x - player.body.x);
+          var dy = Math.abs(this.entities[key].sprite.body.y - player.body.y);
+          var distance = Math.sqrt(dx*dx+dy*dy);
+          console.log(distance);
+          //DEBUG : a changer en fonction des tests
+          var limite = 50;
+          //tuer le joueur ?
+          if (distance < limite){
+            //SOURCE DE PROBLEMES
+            game.defeat();
+          }
+          
+       }
+
       }
     }
     return;

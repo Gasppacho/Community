@@ -217,40 +217,65 @@ Community.Play.prototype = {
 		/**
          * collide
          */
+        //Collide entre player/ground
         if('ground' in this.map) {
             this.game.physics.arcade.collide(this.player, this.map['ground']);
         }
+        //Collide player/ground_snow
         if('ground_snow' in this.map) {
             this.game.physics.arcade.collide(this.player, this.map['ground_snow']);
         }
+        //Collide movable/player et movable/movable
         if('movable' in this.map) {
             this.game.physics.arcade.collide(this.player, this.map['movable']);
             this.game.physics.arcade.collide(this.map['movable'],  this.map['movable']);
         }
+        //Collide  movable/ground
         if('ground' in this.map && 'movable' in this.map){
             this.game.physics.arcade.collide(this.map['ground'], this.map['movable']);            
         }
+        //Collide ground_snow/movable
         if('ground_snow' in this.map && 'movable' in this.map){
             this.game.physics.arcade.collide(this.map['ground_snow'], this.map['movable']);
         }
-
+        //collide firstaid/ground
+        if('firstaid' in this.map && 'ground' in this.map){
+            this.game.physics.arcade.collide(this.map['firstaid'], this.map['ground']);
+        }
+        //collide firstaid/ground_snow
+        if('firstaid' in this.map && 'ground_snow' in this.map){
+            this.game.physics.arcade.collide(this.map['firstaid'], this.map['ground_snow']);
+        }
+        //collide firstaid/firstaid
+        if('firstaid' in this.map){
+            this.game.physics.arcade.collide(this.map['firstaid'], this.map['firstaid']);
+        }
         /**
          * overlaps
          */
+        //degats en cas de plongeon dans la lave
         if('lava' in this.map){
             this.game.physics.arcade.overlap(this.player, this.map['lava'], this.damage, null, this);
         }
+        //victoire en cas de passage de point d'arrivée
         if('boost_left' in this.map && this.map['gameplay'] == 'point'){
             this.game.physics.arcade.overlap(this.player, this.map['boost_left'], this.victory, null, this);
         }
+        //ramassage d'étoiles
         if('star' in this.map && this.map['gameplay'] == 'score'){
             this.game.physics.arcade.overlap(this.player, this.map['star'], this.collectStar, null, this);
         }
+        //permet de monter les echelles
         if('ladder' in this.map){
             this.game.physics.arcade.overlap(this.player, this.map['ladder'], this.lift, null, this);
         }
+        //degats du fantome
         if('fantome' in this.map){
             this.game.physics.arcade.overlap(this.player, this.map['fantome'], this.damage, null, this);
+        }
+        //gagner une vie avec le firstaid
+        if('firstaid' in this.map){
+            this.game.physics.arcade.overlap(this.player, this.map['firstaid'], this.lifeUP, null, this);
         }
         
         this.player.body.velocity.x = 0;
@@ -317,6 +342,35 @@ Community.Play.prototype = {
 			this.victory();
 		}
 
+	},
+	//donne une vie supplementaire quand le joueur passe sur un firstaid
+	lifeUP: function (player, firstaid) {
+		//vies +1
+		if (this.nbr_vies <3){
+			this.nbr_vies++;
+			//detruit le firstaid (sprite)
+			firstaid.kill();
+			//MAJ DES SPRITES DE VIE
+			if (this.nbr_vies == 3){
+	            this.vie1.reset();
+	            this.statistiques.UP("medikits", 1);
+	        }
+	        else if (this.nbr_vies == 2){   
+	            this.vie2.reset();
+	            this.statistiques.UP("medikits", 1);
+	        }
+	        else if (this.nbr_vies == 1)
+	        {
+	            this.vie3.reset();
+	            this.statistiques.UP("medikits", 1);
+	        }
+		}
+		else //si le joueur a toutes ses vies
+		{
+			return;
+		}
+		
+		
 	},
 
 	victory: function () {

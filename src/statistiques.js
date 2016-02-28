@@ -8,7 +8,8 @@ function Statistiques(){ //classe des stats de jeu
     "jumps" : 0,
     "maps_completed" : 0,
     "game_overs" : 0,
-    "lost_lives" : 0
+    "lost_lives" : 0,
+    "medikits" : 0,
     };
 
     //dernieres positions connues du joueur
@@ -124,12 +125,7 @@ Statistiques.prototype.UP = function(key, value){
     else
     {
         
-        /*
-        if (key == "distance"){
-            console.log("distance : " + value);
-            console.log("+Value : " + value); 
-        }
-        */
+
         //recuperation de la valeur precedente et MAJ
         this.stats[key]= this.stats[key] + value;
         //formatage de value

@@ -58,7 +58,7 @@ Loader.prototype.apply_effect = function(buffer, type) {
 	if( type != "ground" ) {
 		buffer.scale.setTo(0.5, 0.5);
 	}
-	if ( type == "movable" ) {
+	if ( type == "movable" || type == "firstaid") {
 		buffer.body.immovable = false;
 		buffer.body.collideWorldBounds = true;
 		buffer.body.gravity.y = 300;

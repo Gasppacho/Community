@@ -119,7 +119,7 @@ Community.Preloader.prototype = {
 		this.load.image('fantome', 'assets/images/ghost.png');
 		this.load.image('menuBack', 'assets/images/theback.jpg');
 		this.load.image('logo', 'assets/images/cube1.png');
-
+		this.load.image('bomb', 'assets/images/bomb.png');
 		// Loading buttons
 		this.load.image('buttonCreate', 'assets/buttons/creer.jpg');
 		this.load.image('buttonPlay', 'assets/buttons/jouer.jpg');
